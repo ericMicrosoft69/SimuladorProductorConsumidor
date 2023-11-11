@@ -5,32 +5,31 @@ import utils.Verdura;
 import java.util.ArrayList;
 
 public class Almacen extends Verdura {
-    static int capacidad ;
+    static int capacidad;
+    public static ArrayList<String> listaVerduras = new ArrayList<>();
 
-    public static  ArrayList listaVerduras ;
-
-
-    public  static void producir() throws InterruptedException {
-        Verdura verdura = new Verdura();
-        listaVerduras.add(verdura.getNombre());
-        capacidad++;
-        if(capacidad==30){
-            System.out.println("El almacen está lleno");
-        listaVerduras.notifyAll();
+    public static void producir() throws InterruptedException {
+        synchronized (listaVerduras) {
+            Verdura verdura = new Verdura();
+            listaVerduras.add(verdura.getNombre());
+            capacidad++;
+            if (capacidad == 30) {
+                System.out.println("El almacen está lleno");
+                listaVerduras.notifyAll();
+            }
         }
     }
 
-    public  static void consumir() throws InterruptedException {
-
-            int contador=0;
+    public static void consumir() throws InterruptedException {
+        synchronized (listaVerduras) {
+            int contador = 0;
             listaVerduras.remove(contador);
             contador++;
             capacidad--;
-            if (capacidad==0){
-                System.out.println("El almacen está Vacion");
+            if (capacidad == 0) {
+                System.out.println("El almacen está vacío");
                 listaVerduras.wait();
             }
-
+        }
     }
-
 }
