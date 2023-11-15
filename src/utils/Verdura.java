@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Verdura {
-    public int tiempoCrecimiento;
+    public int tiempoCrecimientoMaximo = 5000;
     public String nombres[]= {"lettuce", " cabbage", " onion", "spinach", "potato", "celery", "asparagus", "radish", "broccoli", "artichoke", "tomato", "cucumber", " eggplant", " carrot", "green bean"};
 
     public static int numeroAleatorioEnRango(int minimo, int maximo) {
@@ -12,8 +12,7 @@ public class Verdura {
     }
 
     public int getTiempoCrecimiento() {
-        int numeroAleatorio= (int) (Math.floor(Math.random() * (10-1+1)) + 1);
-        return numeroAleatorio;
+        return (int) (Math.floor(Math.random() * this.tiempoCrecimientoMaximo) + 1);
     }
 
     public String getNombre() {
