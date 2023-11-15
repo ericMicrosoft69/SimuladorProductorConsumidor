@@ -4,20 +4,22 @@ import utils.Verdura;
 
 import java.util.ArrayList;
 
-public class Almacen extends Verdura {
-    static int capacidad;
+public class Almacen {
+    private static int capacidad;
     public static ArrayList<String> listaVerduras = new ArrayList<>();
 
-    public static void producir() throws InterruptedException {
-        synchronized (listaVerduras) {
-            Verdura verdura = new Verdura();
-            listaVerduras.add(verdura.getNombre());
+    public synchronized void almacenarVerdura( String nombreVerdura, int tiempoCercimiento) throws InterruptedException {
+
+           while (capacidad == 30) {
+               System.out.println("El almacen está lleno para " );
+               wait();
+           }
+
+            listaVerduras.add(nombreVerdura);
             capacidad++;
-            if (capacidad == 30) {
-                System.out.println("El almacen está lleno");
-                listaVerduras.notifyAll();
-            }
-        }
+            notifyAll();
+
+
     }
 
     public static void consumir() throws InterruptedException {
